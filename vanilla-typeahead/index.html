@@ -77,9 +77,13 @@
         <h1>Try Typing...</h1>
         <div class="input-container">
             <input type="text">
-            <ul id="list"></ul>
+            <ul id="list">
+                </ul>
         </div>
     </div>
+            <div>
+                <ul id="selected"></ul>
+            </div>
 
 </body>
 
@@ -94,9 +98,12 @@ fetch('https://www.swapi.co/api/people')
     .then(response => characters.push(...response.results))
 
 function filterText() {
+    searchVals(); 
     const filtered = characters
-        .filter(val => val.name.toLowerCase().includes(this.value.toLowerCase()))
-        .map(val => `<li>${val.name}</li>`)
+        .filter(val => {
+            return val.name.toLowerCase().includes(this.value.toLowerCase())
+            })
+        .map(val => `<li> ${val.name} <button onclick="selectedArr('${val.name}')"> add </button> </li>`)
 
     if (filtered.length) {
         render(filtered)
@@ -108,10 +115,50 @@ function render(array) {
     list.innerHTML = html;
 }
 
+// if list is empty I need to set display: none; because I don't want anything to show up. 
+    // function 
+    // if statement 
+
+window.onload= function hideList() {
+   document.getElementById('list').style.display = "none";
+}
+
+// if the input has no text (haven't typed) then set the list's display to none,  
+    // function 
+    // if statement    
+// change list's display to block when a value is present 
+    // if statement 
+
+function searchVals( ) {
+    if (!search.value) {
+        list.style.display = "none";
+        list.innerHTML = ''; 
+    } else if (search.value) {
+        list.style.display = "block";
+    } 
+}
+
+const selected = []; 
+
+function selectedArr(name) {
+    if(!selected.includes(name)){
+        selected.push(name);  
+    }
+    const selectedLi = selected.map(name => `<li>${name}</li>`)
+    renderSelected(selectedLi); 
+}
+
+function renderSelected(array) {
+    const html = array.join('');
+    document.getElementById('selected').innerHTML = html;
+}
+
+function remove () {
+    const toBeRemoved = selectedLi.indexOf()
+    selectedLi
+}
+
 search.addEventListener('keyup', filterText);
-
-
-
 
 </script>
 
